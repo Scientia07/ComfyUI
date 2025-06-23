@@ -1,0 +1,203 @@
+{
+  "workflow_index": {
+    "version": "1.0",
+    "last_updated": "2024-01-15",
+    "total_workflows": 5,
+    "categories": {
+      "basic": {
+        "description": "Simple, beginner-friendly workflows",
+        "workflows": {
+          "basic/txt2img/sd35_basic_1024.json": {
+            "name": "SD 3.5 Basic Text-to-Image",
+            "tags": ["beginner", "txt2img", "sd35", "basic", "fast"],
+            "difficulty": "beginner",
+            "estimated_time": "30-60 seconds",
+            "memory_usage": "8-12GB VRAM",
+            "models_required": ["sd3.5_large.safetensors", "ae.safetensors"],
+            "resolution": "1024x1024"
+          },
+          "basic/txt2img/flux_basic_1024.json": {
+            "name": "Flux.1 Basic Text-to-Image",
+            "tags": ["beginner", "txt2img", "flux", "basic", "dual_clip"],
+            "difficulty": "beginner",
+            "estimated_time": "45-90 seconds",
+            "memory_usage": "12-16GB VRAM",
+            "models_required": ["flux1-dev-fp8.safetensors", "clip_l.safetensors", "t5xxl_fp16.safetensors", "ae.safetensors"],
+            "resolution": "1024x1024"
+          }
+        }
+      },
+      "templates": {
+        "description": "Customizable workflow templates",
+        "workflows": {
+          "templates/base_templates/fast_generation.json": {
+            "name": "Fast Generation Template",
+            "tags": ["template", "fast", "speed", "testing", "low_memory"],
+            "difficulty": "beginner",
+            "estimated_time": "15-30 seconds",
+            "memory_usage": "6-8GB VRAM",
+            "models_required": ["[CHECKPOINT]", "[VAE]"],
+            "resolution": "512x512"
+          }
+        }
+      },
+      "examples": {
+        "description": "Ready-to-use example workflows",
+        "workflows": {
+          "examples/portraits/realistic_portrait.json": {
+            "name": "Realistic Portrait Generation",
+            "tags": ["portrait", "realistic", "quality", "detailed", "photorealistic"],
+            "difficulty": "intermediate",
+            "estimated_time": "60-120 seconds",
+            "memory_usage": "10-14GB VRAM",
+            "models_required": ["sd3.5_large.safetensors", "ae.safetensors"],
+            "resolution": "1024x1024"
+          }
+        }
+      }
+    },
+    "filtering": {
+      "by_difficulty": {
+        "beginner": [
+          "basic/txt2img/sd35_basic_1024.json",
+          "basic/txt2img/flux_basic_1024.json",
+          "templates/base_templates/fast_generation.json"
+        ],
+        "intermediate": [
+          "examples/portraits/realistic_portrait.json"
+        ],
+        "advanced": []
+      },
+      "by_model": {
+        "sd35": [
+          "basic/txt2img/sd35_basic_1024.json",
+          "examples/portraits/realistic_portrait.json"
+        ],
+        "flux": [
+          "basic/txt2img/flux_basic_1024.json"
+        ],
+        "universal": [
+          "templates/base_templates/fast_generation.json"
+        ]
+      },
+      "by_memory_usage": {
+        "low_memory": [
+          "templates/base_templates/fast_generation.json"
+        ],
+        "medium_memory": [
+          "basic/txt2img/sd35_basic_1024.json",
+          "examples/portraits/realistic_portrait.json"
+        ],
+        "high_memory": [
+          "basic/txt2img/flux_basic_1024.json"
+        ]
+      },
+      "by_speed": {
+        "fast": [
+          "templates/base_templates/fast_generation.json",
+          "basic/txt2img/sd35_basic_1024.json"
+        ],
+        "medium": [
+          "basic/txt2img/flux_basic_1024.json"
+        ],
+        "slow": [
+          "examples/portraits/realistic_portrait.json"
+        ]
+      },
+      "by_use_case": {
+        "txt2img": [
+          "basic/txt2img/sd35_basic_1024.json",
+          "basic/txt2img/flux_basic_1024.json"
+        ],
+        "portrait": [
+          "examples/portraits/realistic_portrait.json"
+        ],
+        "testing": [
+          "templates/base_templates/fast_generation.json"
+        ]
+      }
+    },
+    "recommended_starter_workflows": [
+      {
+        "workflow": "basic/txt2img/sd35_basic_1024.json",
+        "reason": "Best starting point with SD 3.5 - reliable and fast"
+      },
+      {
+        "workflow": "templates/base_templates/fast_generation.json",
+        "reason": "Fastest generation for quick testing and iteration"
+      },
+      {
+        "workflow": "basic/txt2img/flux_basic_1024.json",
+        "reason": "Advanced model with superior prompt understanding"
+      }
+    ],
+    "compatibility_matrix": {
+      "your_current_models": {
+        "sd3.5_large.safetensors": {
+          "compatible_workflows": [
+            "basic/txt2img/sd35_basic_1024.json",
+            "examples/portraits/realistic_portrait.json"
+          ],
+          "performance": "excellent"
+        },
+        "flux1-dev-fp8.safetensors": {
+          "compatible_workflows": [
+            "basic/txt2img/flux_basic_1024.json"
+          ],
+          "performance": "excellent",
+          "requires_dual_clip": true
+        },
+        "ae.safetensors": {
+          "compatible_workflows": "all",
+          "performance": "standard"
+        },
+        "clip_l.safetensors": {
+          "compatible_workflows": [
+            "basic/txt2img/flux_basic_1024.json"
+          ],
+          "required_for": "flux_workflows"
+        },
+        "t5xxl_fp16.safetensors": {
+          "compatible_workflows": [
+            "basic/txt2img/flux_basic_1024.json"
+          ],
+          "required_for": "flux_workflows"
+        }
+      }
+    },
+    "workflow_statistics": {
+      "total_by_category": {
+        "basic": 2,
+        "advanced": 0,
+        "examples": 1,
+        "templates": 1
+      },
+      "total_by_difficulty": {
+        "beginner": 3,
+        "intermediate": 1,
+        "advanced": 0
+      },
+      "average_generation_time": "45-75 seconds",
+      "memory_range": "6-16GB VRAM"
+    },
+    "usage_instructions": {
+      "import_workflow": [
+        "1. Open ComfyUI interface",
+        "2. Drag & drop JSON file into interface",
+        "3. OR use Load button to browse and select",
+        "4. Workflow loads with all nodes connected"
+      ],
+      "customize_template": [
+        "1. Load template workflow",
+        "2. Replace [PLACEHOLDER] values with your models",
+        "3. Modify prompts and settings as needed",
+        "4. Save as new workflow"
+      ],
+      "troubleshooting": {
+        "missing_model_error": "Check that all required models are in your models directory",
+        "memory_error": "Try a workflow tagged with 'low_memory' or reduce batch size",
+        "slow_generation": "Use workflows tagged with 'fast' for quicker results"
+      }
+    }
+  }
+} 

@@ -271,6 +271,57 @@ You can install ComfyUI in Apple Mac silicon (M1 or M2) with any recent macOS ve
 
 > **Note**: Remember to add your models, VAE, LoRAs etc. to the corresponding Comfy folders, as discussed in [ComfyUI manual installation](#manual-install-windows-linux).
 
+### Enhanced HuggingFace Model Downloader
+
+For easy model downloading and management, ComfyUI includes an enhanced HuggingFace integration that automatically downloads and organizes popular AI models in the correct directories.
+
+**Supported Models:**
+- **FLUX.1-dev** (22.2GB) - Advanced text-to-image generation
+- **Stable Diffusion 3.5 Large** (27.5GB) - High-quality image generation  
+- **Stable Diffusion 3.5 Large Turbo** - Optimized 4-step generation
+
+**Usage:**
+```bash
+# Activate the ComfyUI environment and set clean paths
+source comfy-env/bin/activate
+export LD_LIBRARY_PATH=''
+export PYTHONPATH='/home/joel/dev/AI/ComfyUI/comfy-env/lib/python3.12/site-packages'
+
+# Install requirements
+pip install -r utils/comfyui-hf-integration/requirements.txt
+
+# Run the interactive downloader
+python utils/comfyui-hf-integration/src/index.py
+```
+
+The downloader provides an interactive menu to select models and automatically:
+- Downloads models with progress tracking
+- Places files in correct ComfyUI directories (`models/checkpoints/`, `models/diffusion_models/`, etc.)
+- Skips already downloaded files
+- Validates downloads with size checks
+
+See `utils/comfyui-hf-integration/README.md` for detailed documentation.
+
+**To Launch ComfyUI:**
+
+**Option 1: Use the convenient launch script:**
+```bash
+./launch_comfyui.sh
+```
+
+**Option 2: Manual launch with environment setup:**
+```bash
+# Activate environment and clean paths (required for CUDA compatibility)
+source comfy-env/bin/activate
+export LD_LIBRARY_PATH=''
+export PYTHONPATH='/home/joel/dev/AI/ComfyUI/comfy-env/lib/python3.12/site-packages'
+
+# Launch ComfyUI
+python main.py
+```
+
+> **Note**: The `LD_LIBRARY_PATH` and `PYTHONPATH` exports are required to resolve CUDA library conflicts and ensure proper Python module loading in this environment. The launch script handles this automatically.
+
 #### DirectML (AMD Cards on Windows)
 
 ```pip install torch-directml``` Then you can launch ComfyUI with: ```python main.py --directml```
