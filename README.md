@@ -66,6 +66,9 @@ See what ComfyUI can do with the [example workflows](https://comfyanonymous.gith
    - [Lumina Image 2.0](https://comfyanonymous.github.io/ComfyUI_examples/lumina2/)
    - [HiDream](https://comfyanonymous.github.io/ComfyUI_examples/hidream/)
    - [Cosmos Predict2](https://comfyanonymous.github.io/ComfyUI_examples/cosmos_predict2/)
+- Image Editing Models
+   - [Omnigen 2](https://comfyanonymous.github.io/ComfyUI_examples/omnigen/)
+   - [Flux Kontext](https://comfyanonymous.github.io/ComfyUI_examples/flux/#flux-kontext-image-editing-model)
 - Video Models
    - [Stable Video Diffusion](https://comfyanonymous.github.io/ComfyUI_examples/video/)
    - [Mochi](https://comfyanonymous.github.io/ComfyUI_examples/mochi/)
@@ -323,6 +326,8 @@ python main.py
 > **Note**: The `LD_LIBRARY_PATH` and `PYTHONPATH` exports are required to resolve CUDA library conflicts and ensure proper Python module loading in this environment. The launch script handles this automatically.
 
 #### DirectML (AMD Cards on Windows)
+
+This is very badly supported and is not recommended. There are some unofficial builds of pytorch ROCm on windows that exist that will give you a much better experience than this. This readme will be updated once official pytorch ROCm builds for windows come out.
 
 ```pip install torch-directml``` Then you can launch ComfyUI with: ```python main.py --directml```
 

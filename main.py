@@ -55,6 +55,9 @@ def apply_custom_paths():
 
 
 def execute_prestartup_script():
+    if args.disable_all_custom_nodes and len(args.whitelist_custom_nodes) == 0:
+        return
+
     def execute_script(script_path):
         module_name = os.path.splitext(script_path)[0]
         try:
@@ -65,9 +68,6 @@ def execute_prestartup_script():
         except Exception as e:
             logging.error(f"Failed to execute startup-script: {script_path} / {e}")
         return False
-
-    if args.disable_all_custom_nodes:
-        return
 
     node_paths = folder_paths.get_folder_paths("custom_nodes")
     for custom_node_path in node_paths:
@@ -81,6 +81,9 @@ def execute_prestartup_script():
 
             script_path = os.path.join(module_path, "prestartup_script.py")
             if os.path.exists(script_path):
+                if args.disable_all_custom_nodes and possible_module not in args.whitelist_custom_nodes:
+                    logging.info(f"Prestartup Skipping {possible_module} due to disable_all_custom_nodes and whitelist_custom_nodes")
+                    continue
                 time_before = time.perf_counter()
                 success = execute_script(script_path)
                 node_prestartup_times.append((time.perf_counter() - time_before, module_path, success))
@@ -185,7 +188,13 @@ def prompt_worker(q, server_instance):
 
             current_time = time.perf_counter()
             execution_time = current_time - execution_start_time
-            logging.info("Prompt executed in {:.2f} seconds".format(execution_time))
+
+            # Log Time in a more readable way after 10 minutes
+            if execution_time > 600:
+                execution_time = time.strftime("%H:%M:%S", time.gmtime(execution_time))
+                logging.info(f"Prompt executed in {execution_time}")
+            else:
+                logging.info("Prompt executed in {:.2f} seconds".format(execution_time))
 
         flags = q.get_flags()
         free_memory = flags.get("free_memory", False)
@@ -270,7 +279,10 @@ def start_comfyui(asyncio_loop=None):
     prompt_server = server.PromptServer(asyncio_loop)
 
     hook_breaker_ac10a0.save_functions()
-    nodes.init_extra_nodes(init_custom_nodes=not args.disable_all_custom_nodes, init_api_nodes=not args.disable_api_nodes)
+    nodes.init_extra_nodes(
+        init_custom_nodes=(not args.disable_all_custom_nodes) or len(args.whitelist_custom_nodes) > 0,
+        init_api_nodes=not args.disable_api_nodes
+    )
     hook_breaker_ac10a0.restore_functions()
 
     cuda_malloc_warning()
